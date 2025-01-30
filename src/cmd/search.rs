@@ -1,6 +1,6 @@
 use std::{
     collections::HashMap,
-    path::{Path, PathBuf},
+    path::PathBuf,
 };
 
 use clap::Parser;
@@ -9,7 +9,7 @@ use pxp_index::storage::{IndexStorageConfig, IndexStorageManager};
 use pxp_index::Index as Indexer;
 use rustyline::{error::ReadlineError, CompletionType, Config, DefaultEditor};
 
-use crate::utils::{find_php_files_in, pxp_home_dir, ProgressBar};
+use crate::utils::pxp_home_dir;
 
 #[derive(Debug, Parser)]
 #[command(
