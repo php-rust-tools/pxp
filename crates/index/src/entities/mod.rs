@@ -8,8 +8,9 @@ pub use function::FunctionEntity;
 pub use method::MethodEntity;
 pub use parameters::{Parameter, Parameters};
 use pxp_bytestring::ByteString;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub(crate) struct EntityRegistry {
     functions: Vec<FunctionEntity>,
     classes: Vec<ClassEntity>,
@@ -42,5 +43,23 @@ impl EntityRegistry {
         let name = name.into();
 
         self.classes.iter().find(|c| c.name.resolved == name)
+    }
+
+    pub fn search_classes(&self, name: impl Into<ByteString>) -> Vec<&ClassEntity> {
+        let name = name.into();
+
+        self.classes
+            .iter()
+            .filter(|c| c.name.resolved.to_string().contains(&name.to_string()))
+            .collect()
+    }
+
+    pub fn search_functions(&self, name: impl Into<ByteString>) -> Vec<&FunctionEntity> {
+        let name = name.into();
+
+        self.functions
+            .iter()
+            .filter(|f| f.name.resolved.to_string().contains(&name.to_string()))
+            .collect()
     }
 }

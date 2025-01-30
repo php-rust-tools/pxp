@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use std::ops::Deref;
 use std::ops::DerefMut;
 use std::str::from_utf8;
@@ -6,7 +7,7 @@ use crate::ByteStr;
 
 /// A wrapper for Vec<u8> that provides a human-readable Debug impl and
 /// a few other conveniences.
-#[derive(PartialOrd, PartialEq, Eq, Clone, Hash)]
+#[derive(PartialOrd, PartialEq, Eq, Clone, Hash, Serialize, Deserialize)]
 pub struct ByteString(Vec<u8>);
 
 impl ByteString {

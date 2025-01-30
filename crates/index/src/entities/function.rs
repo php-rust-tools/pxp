@@ -1,11 +1,12 @@
 use pxp_ast::{Name, ResolvedName};
 use pxp_type::Type;
+use serde::{Deserialize, Serialize};
 
 use crate::{location::Location, FileId, HasFileId};
 
 use super::parameters::Parameters;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FunctionEntity {
     pub(crate) name: ResolvedName,
     pub(crate) parameters: Parameters,

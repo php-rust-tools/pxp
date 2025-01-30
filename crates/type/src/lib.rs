@@ -2,9 +2,10 @@ use std::fmt::{Debug, Display};
 
 use pxp_bytestring::ByteString;
 use pxp_span::Span;
+use serde::{Deserialize, Serialize};
 use strum::EnumIs;
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash, Default, EnumIs)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash, Default, EnumIs, Serialize, Deserialize)]
 pub enum Type<N: Debug + Display> {
     Named(N),
     Generic(Box<Type<N>>, Vec<GenericTypeArgument<N>>),
@@ -70,7 +71,7 @@ pub enum Type<N: Debug + Display> {
     Invalid,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ConstExpr<N: Debug + Display> {
     NegativeInteger(ByteString),
     Integer(ByteString),
@@ -91,7 +92,7 @@ impl<N: Debug + Display> Display for ConstExpr<N> {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct GenericTypeArgument<N: Debug + Display> {
     pub r#type: Type<N>,
     pub variance: Option<GenericTypeArgumentVariance>,
@@ -107,7 +108,7 @@ impl<N: Debug + Display> Display for GenericTypeArgument<N> {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum GenericTypeArgumentVariance {
     Invariant,
     Covariant,
@@ -126,20 +127,20 @@ impl Display for GenericTypeArgumentVariance {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct ShapeItem<N: Debug + Display> {
     pub key_name: Option<ShapeItemKey>,
     pub value_type: Type<N>,
     pub optional: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ShapeItemKey {
     Integer(ByteString),
     String(ByteString),
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct ShapeUnsealedType<N: Debug + Display> {
     pub key_type: Option<Type<N>>,
     pub value_type: Type<N>,
@@ -166,7 +167,7 @@ impl Display for ShapeItemKey {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct CallableParameter<N: Debug + Display> {
     pub r#type: Type<N>,
     pub ellipsis: Option<Span>,

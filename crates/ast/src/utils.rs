@@ -3,8 +3,10 @@ use std::slice::IterMut;
 
 use pxp_span::IsSpanned;
 use pxp_span::Span;
+use serde::Deserialize;
+use serde::Serialize;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 
 pub struct CommaSeparated<T> {
     pub inner: Vec<T>,

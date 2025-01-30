@@ -3,8 +3,9 @@ use std::fmt::Display;
 use pxp_bytestring::ByteString;
 use pxp_span::Span;
 use pxp_token::TokenKind;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, PartialEq, Copy, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Copy, Hash, Eq, Serialize, Deserialize)]
 pub enum NameQualification {
     Unqualified,
     Qualified,

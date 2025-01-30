@@ -13,13 +13,14 @@ use pxp_bytestring::ByteString;
 use pxp_span::{IsSpanned, Span};
 use pxp_token::OwnedToken;
 use pxp_type::Type;
+use serde::{Deserialize, Serialize};
 use std::ptr::NonNull;
 
 pub type NodeId = u32;
 
 pub type Block = Vec<Statement>;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Statement {
     pub id: NodeId,
     pub kind: StatementKind,
@@ -39,7 +40,7 @@ impl IsSpanned for Statement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum StatementKind {
     FullOpeningTag(Box<FullOpeningTagStatement>),
     ShortOpeningTag(Box<ShortOpeningTagStatement>),
@@ -122,7 +123,7 @@ impl HasId for StatementKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Expression {
     pub id: NodeId,
     pub kind: ExpressionKind,
@@ -142,7 +143,7 @@ impl IsSpanned for Expression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ExpressionKind {
     Missing(MissingExpression),
     Eval(Box<EvalExpression>),
@@ -285,7 +286,7 @@ impl HasId for ExpressionKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MissingExpression {
     pub id: NodeId,
     pub span: Span,
@@ -303,7 +304,7 @@ impl IsSpanned for MissingExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticExpression {
     pub id: NodeId,
     pub span: Span,
@@ -321,7 +322,7 @@ impl IsSpanned for StaticExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SelfExpression {
     pub id: NodeId,
     pub span: Span,
@@ -339,7 +340,7 @@ impl IsSpanned for SelfExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ParentExpression {
     pub id: NodeId,
     pub span: Span,
@@ -357,7 +358,7 @@ impl IsSpanned for ParentExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CommentStatement {
     pub id: NodeId,
     pub span: Span,
@@ -376,7 +377,7 @@ impl IsSpanned for CommentStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InlineHtmlStatement {
     pub id: NodeId,
     pub span: Span,
@@ -395,7 +396,7 @@ impl IsSpanned for InlineHtmlStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FullOpeningTagStatement {
     pub id: NodeId,
     pub span: Span,
@@ -413,7 +414,7 @@ impl IsSpanned for FullOpeningTagStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ShortOpeningTagStatement {
     pub id: NodeId,
     pub span: Span,
@@ -431,7 +432,7 @@ impl IsSpanned for ShortOpeningTagStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct EchoOpeningTagStatement {
     pub id: NodeId,
     pub span: Span,
@@ -449,7 +450,7 @@ impl IsSpanned for EchoOpeningTagStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClosingTagStatement {
     pub id: NodeId,
     pub span: Span,
@@ -467,7 +468,7 @@ impl IsSpanned for ClosingTagStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ExpressionStatement {
     pub id: NodeId,
     pub span: Span,
@@ -487,7 +488,7 @@ impl IsSpanned for ExpressionStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct GlobalStatement {
     pub id: NodeId,
     pub span: Span,
@@ -508,7 +509,7 @@ impl IsSpanned for GlobalStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BlockStatement {
     pub id: NodeId,
     pub span: Span,
@@ -529,7 +530,7 @@ impl IsSpanned for BlockStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum CastKind {
     Int(Span),
     Bool(Span),
@@ -555,7 +556,7 @@ impl IsSpanned for CastKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Case {
     pub id: NodeId,
     pub span: Span,
@@ -575,7 +576,7 @@ impl IsSpanned for Case {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Use {
     pub id: NodeId,
     pub span: Span,
@@ -596,14 +597,14 @@ impl IsSpanned for Use {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash, Copy)]
 pub enum UseKind {
     Normal,
     Function,
     Const,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct EvalExpression {
     pub id: NodeId,
     pub span: Span,
@@ -623,7 +624,7 @@ impl IsSpanned for EvalExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct EmptyExpression {
     pub id: NodeId,
     pub span: Span,
@@ -643,7 +644,7 @@ impl IsSpanned for EmptyExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DieExpression {
     pub id: NodeId,
     pub span: Span,
@@ -663,7 +664,7 @@ impl IsSpanned for DieExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ExitExpression {
     pub id: NodeId,
     pub span: Span,
@@ -683,7 +684,7 @@ impl IsSpanned for ExitExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IssetExpression {
     pub id: NodeId,
     pub span: Span,
@@ -703,7 +704,7 @@ impl IsSpanned for IssetExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UnsetExpression {
     pub id: NodeId,
     pub span: Span,
@@ -723,7 +724,7 @@ impl IsSpanned for UnsetExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PrintExpression {
     pub id: NodeId,
     pub span: Span,
@@ -744,7 +745,7 @@ impl IsSpanned for PrintExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConcatExpression {
     pub id: NodeId,
     pub span: Span,
@@ -765,7 +766,7 @@ impl IsSpanned for ConcatExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InstanceofExpression {
     pub id: NodeId,
     pub span: Span,
@@ -786,7 +787,7 @@ impl IsSpanned for InstanceofExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ReferenceExpression {
     pub id: NodeId,
     pub span: Span,
@@ -806,7 +807,7 @@ impl IsSpanned for ReferenceExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ParenthesizedExpression {
     pub id: NodeId,
     pub span: Span,
@@ -827,7 +828,7 @@ impl IsSpanned for ParenthesizedExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ErrorSuppressExpression {
     pub id: NodeId,
     pub span: Span,
@@ -847,7 +848,7 @@ impl IsSpanned for ErrorSuppressExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IncludeExpression {
     pub id: NodeId,
     pub span: Span,
@@ -867,7 +868,7 @@ impl IsSpanned for IncludeExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IncludeOnceExpression {
     pub id: NodeId,
     pub span: Span,
@@ -887,7 +888,7 @@ impl IsSpanned for IncludeOnceExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct RequireExpression {
     pub id: NodeId,
     pub span: Span,
@@ -907,7 +908,7 @@ impl IsSpanned for RequireExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct RequireOnceExpression {
     pub id: NodeId,
     pub span: Span,
@@ -927,7 +928,7 @@ impl IsSpanned for RequireOnceExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionCallExpression {
     pub id: NodeId,
     pub span: Span,
@@ -947,7 +948,7 @@ impl IsSpanned for FunctionCallExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionClosureCreationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -967,7 +968,7 @@ impl IsSpanned for FunctionClosureCreationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MethodCallExpression {
     pub id: NodeId,
     pub span: Span,
@@ -989,7 +990,7 @@ impl IsSpanned for MethodCallExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MethodClosureCreationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1011,7 +1012,7 @@ impl IsSpanned for MethodClosureCreationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct NullsafeMethodCallExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1033,7 +1034,7 @@ impl IsSpanned for NullsafeMethodCallExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticMethodCallExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1055,7 +1056,7 @@ impl IsSpanned for StaticMethodCallExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticVariableMethodCallExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1077,7 +1078,7 @@ impl IsSpanned for StaticVariableMethodCallExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticMethodClosureCreationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1099,7 +1100,7 @@ impl IsSpanned for StaticMethodClosureCreationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticVariableMethodClosureCreationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1121,7 +1122,7 @@ impl IsSpanned for StaticVariableMethodClosureCreationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PropertyFetchExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1142,7 +1143,7 @@ impl IsSpanned for PropertyFetchExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct NullsafePropertyFetchExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1163,7 +1164,7 @@ impl IsSpanned for NullsafePropertyFetchExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticPropertyFetchExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1184,7 +1185,7 @@ impl IsSpanned for StaticPropertyFetchExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConstantFetchExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1205,7 +1206,7 @@ impl IsSpanned for ConstantFetchExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1225,13 +1226,13 @@ impl IsSpanned for ArrayExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ArrayKind {
     Short(ArrayKindShort),
     Long(ArrayKindLong),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayKindShort {
     pub span: Span,
     pub left_bracket: Span,
@@ -1244,7 +1245,7 @@ impl IsSpanned for ArrayKindShort {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayKindLong {
     pub span: Span,
     pub array: Span,
@@ -1258,7 +1259,7 @@ impl IsSpanned for ArrayKindLong {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ListExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1280,7 +1281,7 @@ impl IsSpanned for ListExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct NewExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1301,7 +1302,7 @@ impl IsSpanned for NewExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InterpolatedStringExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1320,7 +1321,7 @@ impl IsSpanned for InterpolatedStringExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct HeredocExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1340,7 +1341,7 @@ impl IsSpanned for HeredocExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct NowdocExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1360,7 +1361,7 @@ impl IsSpanned for NowdocExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ShellExecExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1379,7 +1380,7 @@ impl IsSpanned for ShellExecExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BoolExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1398,7 +1399,7 @@ impl IsSpanned for BoolExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayIndexExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1420,7 +1421,7 @@ impl IsSpanned for ArrayIndexExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ShortTernaryExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1441,7 +1442,7 @@ impl IsSpanned for ShortTernaryExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TernaryExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1464,7 +1465,7 @@ impl IsSpanned for TernaryExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CoalesceExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1485,7 +1486,7 @@ impl IsSpanned for CoalesceExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CloneExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1505,7 +1506,7 @@ impl IsSpanned for CloneExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MatchExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1531,7 +1532,7 @@ impl IsSpanned for MatchExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ThrowExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1550,7 +1551,7 @@ impl IsSpanned for ThrowExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct YieldExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1571,7 +1572,7 @@ impl IsSpanned for YieldExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct YieldFromExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1592,7 +1593,7 @@ impl IsSpanned for YieldFromExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CastExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1612,7 +1613,7 @@ impl IsSpanned for CastExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DefaultMatchArm {
     pub id: NodeId,
     pub span: Span,
@@ -1633,7 +1634,7 @@ impl IsSpanned for DefaultMatchArm {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MatchArm {
     pub id: NodeId,
     pub span: Span,
@@ -1654,7 +1655,7 @@ impl IsSpanned for MatchArm {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MagicConstantExpression {
     pub id: NodeId,
     pub span: Span,
@@ -1673,7 +1674,7 @@ impl IsSpanned for MagicConstantExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum MagicConstantKind {
     Directory,
     File,
@@ -1686,7 +1687,7 @@ pub enum MagicConstantKind {
     CompilerHaltOffset,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum StringPart {
     Literal(LiteralStringPart),
     Expression(ExpressionStringPart),
@@ -1701,7 +1702,7 @@ impl HasId for StringPart {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct LiteralStringPart {
     pub id: NodeId,
     pub span: Span,
@@ -1720,7 +1721,7 @@ impl IsSpanned for LiteralStringPart {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ExpressionStringPart {
     pub id: NodeId,
     pub span: Span,
@@ -1739,7 +1740,7 @@ impl IsSpanned for ExpressionStringPart {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ArrayItem {
     Skipped(Span),
     Value(ArrayItemValue),
@@ -1771,7 +1772,7 @@ impl IsSpanned for ArrayItem {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayItemValue {
     pub id: NodeId,
     pub span: Span,
@@ -1790,7 +1791,7 @@ impl IsSpanned for ArrayItemValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayItemReferencedValue {
     pub id: NodeId,
     pub span: Span,
@@ -1810,7 +1811,7 @@ impl IsSpanned for ArrayItemReferencedValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayItemSpreadValue {
     pub id: NodeId,
     pub span: Span,
@@ -1830,7 +1831,7 @@ impl IsSpanned for ArrayItemSpreadValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayItemKeyValue {
     pub id: NodeId,
     pub span: Span,
@@ -1851,7 +1852,7 @@ impl IsSpanned for ArrayItemKeyValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrayItemReferencedKeyValue {
     pub id: NodeId,
     pub span: Span,
@@ -1873,7 +1874,7 @@ impl IsSpanned for ArrayItemReferencedKeyValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ListEntry {
     Skipped(Span),
     Value(ListEntryValue),
@@ -1899,7 +1900,7 @@ impl IsSpanned for ListEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ListEntryValue {
     pub id: NodeId,
     pub span: Span,
@@ -1918,7 +1919,7 @@ impl IsSpanned for ListEntryValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ListEntryKeyValue {
     pub id: NodeId,
     pub span: Span,
@@ -1939,7 +1940,7 @@ impl IsSpanned for ListEntryKeyValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PositionalArgument {
     pub id: NodeId,
     pub span: Span,
@@ -1960,7 +1961,7 @@ impl IsSpanned for PositionalArgument {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct NamedArgument {
     pub id: NodeId,
     pub span: Span,
@@ -1983,7 +1984,7 @@ impl IsSpanned for NamedArgument {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Argument {
     Positional(PositionalArgument),
     Named(NamedArgument),
@@ -1998,7 +1999,7 @@ impl HasId for Argument {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArgumentList {
     pub id: NodeId,
     pub span: Span,
@@ -2020,7 +2021,7 @@ impl IsSpanned for ArgumentList {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SingleArgument {
     pub id: NodeId,
     pub span: Span,
@@ -2042,7 +2043,7 @@ impl IsSpanned for SingleArgument {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArgumentPlaceholder {
     pub id: NodeId,
     pub span: Span,
@@ -2064,7 +2065,7 @@ impl IsSpanned for ArgumentPlaceholder {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Attribute {
     pub id: NodeId,
     pub span: Span,
@@ -2084,7 +2085,7 @@ impl IsSpanned for Attribute {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AttributeGroup {
     pub id: NodeId,
     pub span: Span,
@@ -2103,7 +2104,7 @@ impl IsSpanned for AttributeGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassBody {
     pub id: NodeId,
     pub span: Span,
@@ -2124,7 +2125,7 @@ impl IsSpanned for ClassBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2149,7 +2150,7 @@ impl IsSpanned for ClassStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AnonymousClassBody {
     pub id: NodeId,
     pub span: Span,
@@ -2170,7 +2171,7 @@ impl IsSpanned for AnonymousClassBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AnonymousClassExpression {
     pub id: NodeId,
     pub span: Span,
@@ -2193,7 +2194,7 @@ impl IsSpanned for AnonymousClassExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassExtends {
     pub id: NodeId,
     pub span: Span,
@@ -2213,7 +2214,7 @@ impl IsSpanned for ClassExtends {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassImplements {
     pub id: NodeId,
     pub span: Span,
@@ -2233,7 +2234,7 @@ impl IsSpanned for ClassImplements {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ClassishMember {
     Constant(ClassishConstant),
     TraitUsage(TraitUsage),
@@ -2254,7 +2255,7 @@ impl HasId for ClassishMember {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Method {
     pub id: NodeId,
     pub span: Span,
@@ -2281,7 +2282,7 @@ impl IsSpanned for Method {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MethodBody {
     pub id: NodeId,
     pub span: Span,
@@ -2300,7 +2301,7 @@ impl IsSpanned for MethodBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum MethodBodyKind {
     Abstract(AbstractMethodBody),
     Concrete(ConcreteMethodBody),
@@ -2317,7 +2318,7 @@ impl HasId for MethodBodyKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MissingMethodBody {
     pub id: NodeId,
     pub span: Span,
@@ -2335,7 +2336,7 @@ impl IsSpanned for MissingMethodBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AbstractMethodBody {
     pub id: NodeId,
     pub span: Span,
@@ -2354,7 +2355,7 @@ impl IsSpanned for AbstractMethodBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConcreteMethodBody {
     pub id: NodeId,
     pub span: Span,
@@ -2375,7 +2376,7 @@ impl IsSpanned for ConcreteMethodBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MethodParameterList {
     pub id: NodeId,
     pub span: Span,
@@ -2396,7 +2397,7 @@ impl IsSpanned for MethodParameterList {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MethodParameter {
     pub id: NodeId,
     pub span: Span,
@@ -2421,7 +2422,7 @@ impl IsSpanned for MethodParameter {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MissingClassishMember {
     pub id: NodeId,
     pub span: Span,
@@ -2439,7 +2440,7 @@ impl IsSpanned for MissingClassishMember {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConstantEntry {
     pub id: NodeId,
     pub span: Span,
@@ -2460,7 +2461,7 @@ impl IsSpanned for ConstantEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassishConstantEntry {
     pub id: NodeId,
     pub span: Span,
@@ -2481,7 +2482,7 @@ impl IsSpanned for ClassishConstantEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConstantStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2503,7 +2504,7 @@ impl IsSpanned for ConstantStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClassishConstant {
     pub id: NodeId,
     pub span: Span,
@@ -2528,7 +2529,7 @@ impl IsSpanned for ClassishConstant {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2551,7 +2552,7 @@ impl IsSpanned for IfStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum IfStatementBody {
     Statement(IfStatementBodyStatement),
     Block(IfStatementBodyBlock),
@@ -2566,7 +2567,7 @@ impl HasId for IfStatementBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementBodyStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2587,7 +2588,7 @@ impl IsSpanned for IfStatementBodyStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -2611,7 +2612,7 @@ impl IsSpanned for IfStatementBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementElseIf {
     pub id: NodeId,
     pub span: Span,
@@ -2634,7 +2635,7 @@ impl IsSpanned for IfStatementElseIf {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementElse {
     pub id: NodeId,
     pub span: Span,
@@ -2654,7 +2655,7 @@ impl IsSpanned for IfStatementElse {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementElseIfBlock {
     pub id: NodeId,
     pub span: Span,
@@ -2678,7 +2679,7 @@ impl IsSpanned for IfStatementElseIfBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct IfStatementElseBlock {
     pub id: NodeId,
     pub span: Span,
@@ -2699,7 +2700,7 @@ impl IsSpanned for IfStatementElseBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DataType {
     pub id: NodeId,
     pub kind: Type<ResolvedName>,
@@ -2718,7 +2719,7 @@ impl IsSpanned for DataType {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareEntry {
     pub id: NodeId,
     pub span: Span,
@@ -2739,7 +2740,7 @@ impl IsSpanned for DeclareEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareEntryGroup {
     pub id: NodeId,
     pub span: Span,
@@ -2760,7 +2761,7 @@ impl IsSpanned for DeclareEntryGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum DeclareBody {
     Noop(DeclareBodyNoop),
     Braced(DeclareBodyBraced),
@@ -2779,7 +2780,7 @@ impl HasId for DeclareBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareBodyNoop {
     pub id: NodeId,
     pub span: Span,
@@ -2798,7 +2799,7 @@ impl IsSpanned for DeclareBodyNoop {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareBodyBraced {
     pub id: NodeId,
     pub span: Span,
@@ -2819,7 +2820,7 @@ impl IsSpanned for DeclareBodyBraced {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareBodyExpression {
     pub id: NodeId,
     pub span: Span,
@@ -2839,7 +2840,7 @@ impl IsSpanned for DeclareBodyExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -2861,7 +2862,7 @@ impl IsSpanned for DeclareBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DeclareStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2882,7 +2883,7 @@ impl IsSpanned for DeclareStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UnitEnumCase {
     pub id: NodeId,
     pub span: Span,
@@ -2904,7 +2905,7 @@ impl IsSpanned for UnitEnumCase {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum UnitEnumMember {
     Case(UnitEnumCase),
     Classish(ClassishMember),
@@ -2919,7 +2920,7 @@ impl HasId for UnitEnumMember {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UnitEnumBody {
     pub id: NodeId,
     pub span: Span,
@@ -2940,7 +2941,7 @@ impl IsSpanned for UnitEnumBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UnitEnumStatement {
     pub id: NodeId,
     pub span: Span,
@@ -2963,7 +2964,7 @@ impl IsSpanned for UnitEnumStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BackedEnumCase {
     pub id: NodeId,
     pub span: Span,
@@ -2987,7 +2988,7 @@ impl IsSpanned for BackedEnumCase {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum BackedEnumMember {
     Case(BackedEnumCase),
     Classish(ClassishMember),
@@ -3002,7 +3003,7 @@ impl HasId for BackedEnumMember {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BackedEnumBody {
     pub id: NodeId,
     pub span: Span,
@@ -3023,7 +3024,7 @@ impl IsSpanned for BackedEnumBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BackedEnumStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3048,7 +3049,7 @@ impl IsSpanned for BackedEnumStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum BackedEnumType {
     String(Span),
     Int(Span),
@@ -3065,7 +3066,7 @@ impl IsSpanned for BackedEnumType {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ReturnType {
     pub id: NodeId,
     pub span: Span,
@@ -3085,7 +3086,7 @@ impl IsSpanned for ReturnType {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionParameter {
     pub id: NodeId,
     pub span: Span,
@@ -3110,7 +3111,7 @@ impl IsSpanned for FunctionParameter {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionParameterList {
     pub id: NodeId,
     pub span: Span,
@@ -3132,7 +3133,7 @@ impl IsSpanned for FunctionParameterList {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionBody {
     pub id: NodeId,
     pub span: Span,
@@ -3154,7 +3155,7 @@ impl IsSpanned for FunctionBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FunctionStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3180,7 +3181,7 @@ impl IsSpanned for FunctionStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClosureUseVariable {
     pub id: NodeId,
     pub span: Span,
@@ -3201,7 +3202,7 @@ impl IsSpanned for ClosureUseVariable {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClosureUse {
     pub id: NodeId,
     pub span: Span,
@@ -3224,7 +3225,7 @@ impl IsSpanned for ClosureUse {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ClosureExpression {
     pub id: NodeId,
     pub span: Span,
@@ -3251,7 +3252,7 @@ impl IsSpanned for ClosureExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArrowFunctionExpression {
     pub id: NodeId,
     pub span: Span,
@@ -3278,7 +3279,7 @@ impl IsSpanned for ArrowFunctionExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct LabelStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3299,7 +3300,7 @@ impl IsSpanned for LabelStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct GotoStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3321,7 +3322,7 @@ impl IsSpanned for GotoStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Identifier {
     SimpleIdentifier(SimpleIdentifier),
     DynamicIdentifier(DynamicIdentifier),
@@ -3336,7 +3337,7 @@ impl HasId for Identifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SimpleIdentifier {
     pub id: NodeId,
     pub symbol: ByteString,
@@ -3355,7 +3356,7 @@ impl IsSpanned for SimpleIdentifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DynamicIdentifier {
     pub id: NodeId,
     pub span: Span,
@@ -3374,7 +3375,7 @@ impl IsSpanned for DynamicIdentifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InterfaceExtends {
     pub id: NodeId,
     pub span: Span,
@@ -3394,7 +3395,7 @@ impl IsSpanned for InterfaceExtends {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InterfaceBody {
     pub id: NodeId,
     pub span: Span,
@@ -3415,7 +3416,7 @@ impl IsSpanned for InterfaceBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InterfaceStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3438,7 +3439,7 @@ impl IsSpanned for InterfaceStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Literal {
     pub id: NodeId,
     pub span: Span,
@@ -3458,7 +3459,7 @@ impl IsSpanned for Literal {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum LiteralKind {
     Integer,
     Float,
@@ -3466,7 +3467,7 @@ pub enum LiteralKind {
     Missing,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForeachStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3489,7 +3490,7 @@ impl IsSpanned for ForeachStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ForeachStatementIterator {
     Value(ForeachStatementIteratorValue),
     KeyAndValue(ForeachStatementIteratorKeyAndValue),
@@ -3504,7 +3505,7 @@ impl HasId for ForeachStatementIterator {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForeachStatementIteratorValue {
     pub id: NodeId,
     pub span: Span,
@@ -3526,7 +3527,7 @@ impl IsSpanned for ForeachStatementIteratorValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForeachStatementIteratorKeyAndValue {
     pub id: NodeId,
     pub span: Span,
@@ -3550,7 +3551,7 @@ impl IsSpanned for ForeachStatementIteratorKeyAndValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ForeachStatementBody {
     Statement(ForeachStatementBodyStatement),
     Block(ForeachStatementBodyBlock),
@@ -3565,7 +3566,7 @@ impl HasId for ForeachStatementBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForeachStatementBodyStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3584,7 +3585,7 @@ impl IsSpanned for ForeachStatementBodyStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForeachStatementBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -3606,7 +3607,7 @@ impl IsSpanned for ForeachStatementBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3629,7 +3630,7 @@ impl IsSpanned for ForStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForStatementIterator {
     pub id: NodeId,
     pub span: Span,
@@ -3652,7 +3653,7 @@ impl IsSpanned for ForStatementIterator {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ForStatementBody {
     Statement(ForStatementBodyStatement),
     Block(ForStatementBodyBlock),
@@ -3667,7 +3668,7 @@ impl HasId for ForStatementBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForStatementBodyStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3686,7 +3687,7 @@ impl IsSpanned for ForStatementBodyStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ForStatementBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -3708,7 +3709,7 @@ impl IsSpanned for ForStatementBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DoWhileStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3733,7 +3734,7 @@ impl IsSpanned for DoWhileStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct WhileStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3756,7 +3757,7 @@ impl IsSpanned for WhileStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum WhileStatementBody {
     Statement(WhileStatementBodyStatement),
     Block(WhileStatementBodyBlock),
@@ -3771,7 +3772,7 @@ impl HasId for WhileStatementBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct WhileStatementBodyStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3790,7 +3791,7 @@ impl IsSpanned for WhileStatementBodyStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct WhileStatementBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -3812,7 +3813,7 @@ impl IsSpanned for WhileStatementBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Level {
     Literal(LiteralLevel),
     Parenthesized(ParenthesizedLevel),
@@ -3827,7 +3828,7 @@ impl HasId for Level {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct LiteralLevel {
     pub id: NodeId,
     pub literal: Literal,
@@ -3839,7 +3840,7 @@ impl HasId for LiteralLevel {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ParenthesizedLevel {
     pub id: NodeId,
     pub span: Span,
@@ -3860,7 +3861,7 @@ impl IsSpanned for ParenthesizedLevel {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BreakStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3881,7 +3882,7 @@ impl IsSpanned for BreakStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ContinueStatement {
     pub id: NodeId,
     pub span: Span,
@@ -3902,7 +3903,7 @@ impl IsSpanned for ContinueStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum VisibilityModifier {
     Public(Span),
     Protected(Span),
@@ -3920,7 +3921,7 @@ impl IsSpanned for VisibilityModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum PromotedPropertyModifier {
     Public(Span),
     Protected(Span),
@@ -3946,7 +3947,7 @@ impl IsSpanned for PromotedPropertyModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Default)]
 pub struct PromotedPropertyModifierGroup {
     pub id: NodeId,
     pub span: Span,
@@ -3965,7 +3966,7 @@ impl IsSpanned for PromotedPropertyModifierGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum PropertyModifier {
     Public(Span),
     Protected(Span),
@@ -3993,7 +3994,7 @@ impl IsSpanned for PropertyModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Default)]
 pub struct PropertyModifierGroup {
     pub id: NodeId,
     pub span: Span,
@@ -4012,7 +4013,7 @@ impl IsSpanned for PropertyModifierGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum MethodModifier {
     Public(Span),
     Protected(Span),
@@ -4036,7 +4037,7 @@ impl IsSpanned for MethodModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Default)]
 pub struct MethodModifierGroup {
     pub id: NodeId,
     pub span: Span,
@@ -4055,7 +4056,7 @@ impl IsSpanned for MethodModifierGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ClassModifier {
     Abstract(Span),
     Final(Span),
@@ -4073,7 +4074,7 @@ impl IsSpanned for ClassModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Default)]
 pub struct ClassModifierGroup {
     pub id: NodeId,
     pub span: Span,
@@ -4092,7 +4093,7 @@ impl IsSpanned for ClassModifierGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ConstantModifier {
     Public(Span),
     Protected(Span),
@@ -4112,7 +4113,7 @@ impl IsSpanned for ConstantModifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConstantModifierGroup {
     pub id: NodeId,
     pub span: Span,
@@ -4131,7 +4132,7 @@ impl IsSpanned for ConstantModifierGroup {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UnbracedNamespace {
     pub id: NodeId,
     pub span: Span,
@@ -4153,7 +4154,7 @@ impl IsSpanned for UnbracedNamespace {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BracedNamespace {
     pub id: NodeId,
     pub span: Span,
@@ -4174,7 +4175,7 @@ impl IsSpanned for BracedNamespace {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BracedNamespaceBody {
     pub id: NodeId,
     pub span: Span,
@@ -4195,7 +4196,7 @@ impl IsSpanned for BracedNamespaceBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum NamespaceStatement {
     Unbraced(UnbracedNamespace),
     Braced(BracedNamespace),
@@ -4210,7 +4211,7 @@ impl HasId for NamespaceStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ArithmeticOperationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4229,7 +4230,7 @@ impl IsSpanned for ArithmeticOperationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ArithmeticOperationKind {
     Addition {
         id: NodeId,
@@ -4318,7 +4319,7 @@ impl HasId for ArithmeticOperationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AssignmentOperationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4339,7 +4340,7 @@ impl IsSpanned for AssignmentOperationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Copy)]
 pub enum AssignmentOperationKind {
     Assign(Span),
     Addition(Span),
@@ -4379,7 +4380,7 @@ impl IsSpanned for AssignmentOperationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BitwiseOperationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4398,7 +4399,7 @@ impl IsSpanned for BitwiseOperationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum BitwiseOperationKind {
     And {
         id: NodeId,
@@ -4450,7 +4451,7 @@ impl HasId for BitwiseOperationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ComparisonOperationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4469,7 +4470,7 @@ impl IsSpanned for ComparisonOperationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ComparisonOperationKind {
     Equal {
         id: NodeId,
@@ -4550,7 +4551,7 @@ impl HasId for ComparisonOperationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct LogicalOperationExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4569,7 +4570,7 @@ impl IsSpanned for LogicalOperationExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum LogicalOperationKind {
     And {
         id: NodeId,
@@ -4621,7 +4622,7 @@ impl HasId for LogicalOperationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Name {
     pub id: NodeId,
     pub kind: NameKind,
@@ -4640,39 +4641,39 @@ impl IsSpanned for Name {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum NameKind {
     Special(SpecialName),
     Unresolved(UnresolvedName),
     Resolved(ResolvedName),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SpecialName {
     pub kind: SpecialNameKind,
     pub symbol: ByteString,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Copy)]
 pub enum SpecialNameKind {
     Self_,
     Parent,
     Static,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash)]
 pub struct UnresolvedName {
     pub symbol: ByteString,
     pub qualification: NameQualification,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash)]
 pub struct ResolvedName {
     pub resolved: ByteString,
     pub original: ByteString,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Property {
     Simple(SimpleProperty),
     Hooked(HookedProperty),
@@ -4687,7 +4688,7 @@ impl HasId for Property {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SimpleProperty {
     pub id: NodeId,
     pub span: Span,
@@ -4711,7 +4712,7 @@ impl IsSpanned for SimpleProperty {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct HookedProperty {
     pub id: NodeId,
     pub span: Span,
@@ -4734,7 +4735,7 @@ impl IsSpanned for HookedProperty {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PropertyHookList {
     pub id: NodeId,
     pub span: Span,
@@ -4755,7 +4756,7 @@ impl IsSpanned for PropertyHookList {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PropertyHook {
     pub id: NodeId,
     pub span: Span,
@@ -4776,7 +4777,7 @@ impl IsSpanned for PropertyHook {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum PropertyHookBody {
     Abstract(Span),
     Concrete(ConcretePropertyHookBody),
@@ -4803,7 +4804,7 @@ impl IsSpanned for PropertyHookBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum ConcretePropertyHookBody {
     Block(ConcretePropertyHookBodyBlock),
     Expression(ConcretePropertyHookBodyExpression),
@@ -4818,7 +4819,7 @@ impl HasId for ConcretePropertyHookBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConcretePropertyHookBodyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -4839,7 +4840,7 @@ impl IsSpanned for ConcretePropertyHookBodyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ConcretePropertyHookBodyExpression {
     pub id: NodeId,
     pub span: Span,
@@ -4860,7 +4861,7 @@ impl IsSpanned for ConcretePropertyHookBodyExpression {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum PropertyHookKind {
     Get(Span),
     Set(Span),
@@ -4878,7 +4879,7 @@ impl IsSpanned for PropertyHookKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct PropertyEntry {
     pub id: NodeId,
     pub span: Span,
@@ -4897,7 +4898,7 @@ impl IsSpanned for PropertyEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum PropertyEntryKind {
     Uninitialized(UninitializedPropertyEntry),
     Initialized(InitializedPropertyEntry),
@@ -4912,7 +4913,7 @@ impl HasId for PropertyEntryKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UninitializedPropertyEntry {
     pub id: NodeId,
     pub span: Span,
@@ -4931,7 +4932,7 @@ impl IsSpanned for UninitializedPropertyEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct InitializedPropertyEntry {
     pub id: NodeId,
     pub span: Span,
@@ -4952,7 +4953,7 @@ impl IsSpanned for InitializedPropertyEntry {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitBody {
     pub id: NodeId,
     pub span: Span,
@@ -4973,7 +4974,7 @@ impl IsSpanned for TraitBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitStatement {
     pub id: NodeId,
     pub span: Span,
@@ -4995,7 +4996,7 @@ impl IsSpanned for TraitStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitUsage {
     pub id: NodeId,
     pub span: Span,
@@ -5016,7 +5017,7 @@ impl IsSpanned for TraitUsage {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitUsageAdaptation {
     pub id: NodeId,
     pub span: Span,
@@ -5035,7 +5036,7 @@ impl IsSpanned for TraitUsageAdaptation {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum TraitUsageAdaptationKind {
     Alias(TraitUsageAdaptationAlias),
     Visibility(TraitUsageAdaptationVisibility),
@@ -5052,7 +5053,7 @@ impl HasId for TraitUsageAdaptationKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitUsageAdaptationAlias {
     pub id: NodeId,
     pub span: Span,
@@ -5074,7 +5075,7 @@ impl IsSpanned for TraitUsageAdaptationAlias {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitUsageAdaptationVisibility {
     pub id: NodeId,
     pub span: Span,
@@ -5095,7 +5096,7 @@ impl IsSpanned for TraitUsageAdaptationVisibility {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TraitUsageAdaptationPrecedence {
     pub id: NodeId,
     pub span: Span,
@@ -5116,7 +5117,7 @@ impl IsSpanned for TraitUsageAdaptationPrecedence {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CatchType {
     pub id: NodeId,
     pub span: Span,
@@ -5135,7 +5136,7 @@ impl IsSpanned for CatchType {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum CatchTypeKind {
     Identifier(CatchTypeKindIdentifier),
     Union(CatchTypeKindUnion),
@@ -5150,7 +5151,7 @@ impl HasId for CatchTypeKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CatchTypeKindIdentifier {
     pub id: NodeId,
     pub span: Span,
@@ -5169,7 +5170,7 @@ impl IsSpanned for CatchTypeKindIdentifier {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CatchTypeKindUnion {
     pub id: NodeId,
     pub span: Span,
@@ -5188,7 +5189,7 @@ impl IsSpanned for CatchTypeKindUnion {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct TryStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5211,7 +5212,7 @@ impl IsSpanned for TryStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct CatchBlock {
     pub id: NodeId,
     pub span: Span,
@@ -5234,7 +5235,7 @@ impl IsSpanned for CatchBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct FinallyBlock {
     pub id: NodeId,
     pub span: Span,
@@ -5255,7 +5256,7 @@ impl IsSpanned for FinallyBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Variable {
     SimpleVariable(SimpleVariable),
     VariableVariable(VariableVariable),
@@ -5272,7 +5273,7 @@ impl HasId for Variable {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash)]
 pub struct SimpleVariable {
     pub id: NodeId,
     pub symbol: ByteString,
@@ -5292,7 +5293,7 @@ impl IsSpanned for SimpleVariable {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct VariableVariable {
     pub id: NodeId,
     pub span: Span,
@@ -5311,7 +5312,7 @@ impl IsSpanned for VariableVariable {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct BracedVariableVariable {
     pub id: NodeId,
     pub span: Span,
@@ -5332,7 +5333,7 @@ impl IsSpanned for BracedVariableVariable {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum Ending {
     Missing(Span),
     Semicolon(Span),
@@ -5350,7 +5351,7 @@ impl IsSpanned for Ending {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5370,7 +5371,7 @@ impl IsSpanned for StaticStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SwitchStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5393,7 +5394,7 @@ impl IsSpanned for SwitchStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct EchoStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5414,7 +5415,7 @@ impl IsSpanned for EchoStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct ReturnStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5435,7 +5436,7 @@ impl IsSpanned for ReturnStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct UseStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5455,7 +5456,7 @@ impl IsSpanned for UseStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct GroupUseStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5476,7 +5477,7 @@ impl IsSpanned for GroupUseStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct HaltCompilerStatement {
     pub id: NodeId,
     pub span: Span,
@@ -5495,7 +5496,7 @@ impl IsSpanned for HaltCompilerStatement {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct StaticVar {
     pub id: NodeId,
     pub span: Span,
@@ -5515,7 +5516,7 @@ impl IsSpanned for StaticVar {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Comment {
     pub id: NodeId,
     pub span: Span,
@@ -5534,7 +5535,7 @@ impl IsSpanned for Comment {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum CommentKind {
     SingleLine(SingleLineComment),
     MultiLine(MultiLineComment),
@@ -5553,7 +5554,7 @@ impl HasId for CommentKind {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct SingleLineComment {
     pub id: NodeId,
     pub span: Span,
@@ -5572,7 +5573,7 @@ impl IsSpanned for SingleLineComment {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct MultiLineComment {
     pub id: NodeId,
     pub span: Span,
@@ -5591,7 +5592,7 @@ impl IsSpanned for MultiLineComment {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct HashMarkComment {
     pub id: NodeId,
     pub span: Span,
@@ -5610,7 +5611,7 @@ impl IsSpanned for HashMarkComment {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockComment {
     pub id: NodeId,
     pub span: Span,
@@ -5629,7 +5630,7 @@ impl IsSpanned for DocBlockComment {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlock {
     pub id: NodeId,
     pub span: Span,
@@ -5648,7 +5649,7 @@ impl IsSpanned for DocBlock {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum DocBlockNode {
     Text(DocBlockTextNode),
     Tag(DocBlockTagNode),
@@ -5663,7 +5664,7 @@ impl HasId for DocBlockNode {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockTextNode {
     pub id: NodeId,
     pub span: Span,
@@ -5682,7 +5683,7 @@ impl IsSpanned for DocBlockTextNode {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockTagNode {
     pub id: NodeId,
     pub span: Span,
@@ -5701,7 +5702,7 @@ impl IsSpanned for DocBlockTagNode {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum DocBlockTag {
     ParamClosureThis(DocBlockParamClosureThisTag),
     Param(DocBlockParamTag),
@@ -5738,7 +5739,7 @@ impl HasId for DocBlockTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockParamClosureThisTag {
     pub id: NodeId,
     pub span: Span,
@@ -5760,7 +5761,7 @@ impl IsSpanned for DocBlockParamClosureThisTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockParamTag {
     pub id: NodeId,
     pub span: Span,
@@ -5784,7 +5785,7 @@ impl IsSpanned for DocBlockParamTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockReturnTag {
     pub id: NodeId,
     pub span: Span,
@@ -5805,7 +5806,7 @@ impl IsSpanned for DocBlockReturnTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockThrowsTag {
     pub id: NodeId,
     pub span: Span,
@@ -5826,7 +5827,7 @@ impl IsSpanned for DocBlockThrowsTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockVarTag {
     pub id: NodeId,
     pub span: Span,
@@ -5848,7 +5849,7 @@ impl IsSpanned for DocBlockVarTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockPropertyTag {
     pub id: NodeId,
     pub span: Span,
@@ -5870,7 +5871,7 @@ impl IsSpanned for DocBlockPropertyTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockMethodTag {
     pub id: NodeId,
     pub span: Span,
@@ -5895,7 +5896,7 @@ impl IsSpanned for DocBlockMethodTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockTemplateTagValue {
     pub id: NodeId,
     pub span: Span,
@@ -5918,7 +5919,7 @@ impl IsSpanned for DocBlockTemplateTagValue {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockTemplateTag {
     pub id: NodeId,
     pub span: Span,
@@ -5938,7 +5939,7 @@ impl IsSpanned for DocBlockTemplateTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockExtendsTag {
     pub id: NodeId,
     pub span: Span,
@@ -5959,7 +5960,7 @@ impl IsSpanned for DocBlockExtendsTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockImplementsTag {
     pub id: NodeId,
     pub span: Span,
@@ -5980,7 +5981,7 @@ impl IsSpanned for DocBlockImplementsTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockUsesTag {
     pub id: NodeId,
     pub span: Span,
@@ -6001,7 +6002,7 @@ impl IsSpanned for DocBlockUsesTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockDeprecatedTag {
     pub id: NodeId,
     pub span: Span,
@@ -6021,7 +6022,7 @@ impl IsSpanned for DocBlockDeprecatedTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct DocBlockGenericTag {
     pub id: NodeId,
     pub span: Span,
@@ -6041,7 +6042,7 @@ impl IsSpanned for DocBlockGenericTag {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Default)]
 pub struct CommentGroup {
     pub id: NodeId,
     pub comments: Vec<Comment>,

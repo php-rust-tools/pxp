@@ -10,3 +10,4 @@ license-file.workspace = true
 pxp-bytestring = { version = "0.1.0", path = "../bytestring" }
 pxp-span = { path = "../span" }
 strum = { version = "0.26.3", features = ["derive"] }
+serde = { workspace = true }

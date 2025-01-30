@@ -2,8 +2,9 @@ use std::fmt::Display;
 
 use pxp_bytestring::{ByteStr, ByteString};
 use pxp_span::{IsSpanned, Span};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 
 pub enum OpenTagKind {
     Full,  // `<?php`
@@ -11,7 +12,7 @@ pub enum OpenTagKind {
     Echo,  // `<?=`
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 
 pub enum TokenKind {
     Missing,
@@ -231,7 +232,7 @@ pub struct Token<'a> {
     pub symbol: &'a ByteStr,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct OwnedToken {
     pub kind: TokenKind,
     pub span: Span,

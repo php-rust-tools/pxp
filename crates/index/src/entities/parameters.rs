@@ -1,9 +1,10 @@
 use pxp_ast::{Name, ResolvedName, SimpleVariable};
 use pxp_type::Type;
+use serde::{Deserialize, Serialize};
 
 use crate::location::Location;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Parameters {
     parameters: Vec<Parameter>,
 }
@@ -26,7 +27,7 @@ impl Parameters {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Parameter {
     pub(crate) name: SimpleVariable,
     pub(crate) r#type: Option<Type<ResolvedName>>,
