@@ -14,28 +14,23 @@ use crate::utils::{find_php_files_in, pxp_home_dir, ProgressBar};
 #[derive(Debug, Parser)]
 #[command(
     version,
-    about = "Indexes a directory and provides a REPL for searching through the index.",
+    about = "Searches for indexed functions and classes for a given project.",
     after_help = "This command is only intended for use during development and testing."
 )]
-pub struct Index {
-    #[clap(help = "The path to a file or directory.")]
+pub struct Search {
+    #[clap(help = "The path to an indexed directory.")]
     path: PathBuf,
 
     #[clap(short, long, help = "Do not show progress bar.")]
     no_progress: bool,
 }
 
-pub fn index(args: Index) -> anyhow::Result<()> {
+pub fn search(args: Search) -> anyhow::Result<()> {
     if !args.path.exists() {
         anyhow::bail!("The path `{}` does not exist.", args.path.display());
     }
 
-    let mut index = Indexer::new();
-
-    perform(&args, &mut index, &args.path)?;
-
-    let mut index_manager = get_index_storage(args.path);
-    index_manager.store(&index);
+    let index = get_index_storage(args.path).load();
 
     repl(&index)?;
 
@@ -97,56 +92,17 @@ fn repl(index: &Indexer) -> anyhow::Result<()> {
 }
 
 fn handle(command: &str, index: &Indexer) -> anyhow::Result<()> {
-    let parts = command.split_whitespace().collect::<Vec<_>>();
+    index.search_files(command).iter().for_each(|path| {
+        println!("{}", path.display().to_string().green());
+    });
 
-    match &parts[..] {
-        ["count", "functions"] => println!(
-            "There are {} functions in the index.",
-            index.number_of_functions().to_string().bold().underline()
-        ),
-        ["get", "function", name] => {
-            let function = index.get_function(*name);
+    index.search_classes(command).iter().for_each(|function| {
+        println!("{}", function.name().to_string().blue());
+    });
 
-            match function {
-                Some(function) => println!("{:#?}", function),
-                None => println!("Function `{}` not found.", name.bold()),
-            }
-        }
-        ["count", "classes"] => println!(
-            "There are {} classes in the index.",
-            index.number_of_classes().to_string().bold().underline()
-        ),
-        ["get", "class", name] => {
-            let class = index.get_class(*name);
-
-            match class {
-                Some(class) => println!("{:#?}", class),
-                None => println!("Class `{}` not found.", name.bold()),
-            }
-        }
-        _ => println!("Unrecognised command: `{}`", command.red().bold()),
-    }
-
-    Ok(())
-}
-
-fn perform(args: &Index, index: &mut Indexer, path: &Path) -> anyhow::Result<()> {
-    if path.is_file() {
-        index.index_file(path);
-    } else {
-        let files = find_php_files_in(path)?;
-        let bar = ProgressBar::new(!args.no_progress, files.len() as u64);
-
-        for file in files {
-            bar.set_message(file.display().to_string());
-
-            index.index_file(&file);
-
-            bar.inc(1);
-        }
-
-        bar.finish_and_clear();
-    }
+    index.search_functions(command).iter().for_each(|class| {
+        println!("{}", class.get_name().to_string().yellow());
+    });
 
     Ok(())
 }

@@ -18,6 +18,7 @@ use pxp_token::OwnedToken;
 use pxp_span::{Span, IsSpanned};
 use pxp_bytestring::ByteString;
 use std::ptr::NonNull;
+use serde::{Serialize, Deserialize};
 
 
 RUST;
@@ -72,7 +73,7 @@ foreach ($ast as $node => $structure) {
 
     $output .= feature_flag($structure);
 
-    $derive = 'Debug, PartialEq, Eq, Clone';
+    $derive = 'Debug, PartialEq, Eq, Clone, Serialize, Deserialize';
 
     if (is_array($structure) && isset($structure['derive'])) {
         $derive .= ', ' . $structure['derive'];

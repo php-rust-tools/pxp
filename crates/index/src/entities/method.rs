@@ -1,11 +1,12 @@
 use pxp_ast::{MethodModifierGroup, Name, ResolvedName, SimpleIdentifier};
 use pxp_type::Type;
+use serde::{Deserialize, Serialize};
 
 use crate::{location::Location, HasFileId};
 
 use super::Parameters;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MethodEntity {
     pub(crate) name: SimpleIdentifier,
     pub(crate) parameters: Parameters,

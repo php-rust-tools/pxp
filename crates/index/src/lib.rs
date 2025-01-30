@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use entities::EntityRegistry;
 use file::FileRegistry;
@@ -8,6 +8,7 @@ mod file;
 mod indexer;
 mod location;
 mod reflection;
+pub mod storage;
 
 pub use file::{FileId, HasFileId};
 use indexer::IndexingVisitor;
@@ -20,10 +21,11 @@ pub use entities::{FunctionEntity, Parameter, Parameters};
 pub use location::{HasLocation, Location};
 pub use reflection::{
     ReflectionClass, ReflectionFunction, ReflectionFunctionLike, ReflectionParameter,
-    ReflectsParameters, ReflectionType,
+    ReflectionType, ReflectsParameters,
 };
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Index {
     files: FileRegistry,
     pub(crate) entities: EntityRegistry,
@@ -75,5 +77,29 @@ impl Index {
 
     pub fn get_file_path_unchecked(&self, from: impl HasFileId) -> &std::path::Path {
         self.files.get_file_path_unchecked(from.file_id())
+    }
+
+    pub fn search_files(&self, query: &str) -> Vec<&PathBuf> {
+        self.files
+            .files()
+            .keys()
+            .filter(|path| path.to_string_lossy().contains(query))
+            .collect()
+    }
+
+    pub fn search_classes(&self, query: &str) -> Vec<ReflectionClass> {
+        self.entities
+            .search_classes(query)
+            .into_iter()
+            .map(ReflectionClass::new)
+            .collect()
+    }
+
+    pub fn search_functions(&self, query: &str) -> Vec<ReflectionFunction> {
+        self.entities
+            .search_functions(query)
+            .into_iter()
+            .map(ReflectionFunction::new)
+            .collect()
     }
 }

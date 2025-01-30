@@ -18,6 +18,11 @@ license-file = "LICENSE"
 rust-version = "1.76"
 edition = "2021"
 
+[workspace.dependencies]
+serde = { version = "1.0.216", features = ["derive"] }
+serde_json = "1.0.138"
+serde_derive = "1.0.216"
+
 [profile.release]
 debug = true
 
@@ -39,6 +44,4 @@ pxp-span = { version = "0.1.0", path = "crates/span" }
 pxp-token = { version = "0.1.0", path = "crates/token" }
 pxp-type = { version = "0.1.0", path = "crates/type" }
 rustyline = "15.0.0"
-serde = { version = "1.0.216", features = ["derive"] }
-serde_derive = "1.0.216"
 toml = "0.8.19"

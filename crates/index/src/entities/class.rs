@@ -1,10 +1,11 @@
 use pxp_ast::ResolvedName;
+use serde::{Deserialize, Serialize};
 
 use crate::{location::Location, HasFileId};
 
 use super::MethodEntity;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ClassEntity {
     pub(crate) name: ResolvedName,
     pub(crate) kind: ClassEntityKind,
@@ -12,7 +13,7 @@ pub struct ClassEntity {
     pub(crate) location: Location,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub enum ClassEntityKind {
     Class,
     Interface,

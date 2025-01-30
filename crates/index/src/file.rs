@@ -1,9 +1,10 @@
+use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
     path::{Path, PathBuf},
 };
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct FileId(usize);
 
 impl FileId {
@@ -22,7 +23,7 @@ impl HasFileId for FileId {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub(crate) struct FileRegistry {
     files: HashMap<PathBuf, FileId>,
 }
@@ -38,6 +39,10 @@ impl FileRegistry {
                     None
                 }
             })
+    }
+
+    pub fn files(&self) -> &HashMap<PathBuf, FileId> {
+        &self.files
     }
 
     pub fn get_file_path_unchecked(&self, id: FileId) -> &Path {
